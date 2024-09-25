@@ -125,10 +125,10 @@ main:
 	movq 	%rsp, %rbp 		# copy stack pointer value to base pointer
 
 	subq 	$32, %rsp     	# Save the values of callee-saved registers
-	movq 	-8(%rbp),  %r12
-	movq 	-16(%rbp), %r13
-	movq 	-24(%rbp), %r14
-	movq 	-32(%rbp), %r15
+	movq 	%r12, -8(%rbp)
+	movq 	%r13, -16(%rbp)
+	movq 	%r14, -24(%rbp)
+	movq 	%r15, -32(%rbp)
 
 	# Allocate 30'000 bytes to stack for data (wiki documentation)
 	subq 	$30000, %rsp
@@ -243,10 +243,10 @@ executing_instructions_loop:
 	jmp 	executing_instructions_loop
 
 	# Return callee-saved their original value back
-	movq 	%r12, -8(%rbp)
-	movq 	%r13, -16(%rbp)
-	movq 	%r14, -24(%rbp)
-	movq 	%r15, -32(%rbp)
+	movq 	-8(%rbp),  %r12
+	movq 	-16(%rbp), %r13
+	movq 	-24(%rbp), %r14
+	movq 	-32(%rbp), %r15 
 
 	# epilogue
 	movq 	%rbp, %rsp 			# clear local variables from stack
